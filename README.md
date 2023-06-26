@@ -13,9 +13,11 @@ A terminal based grading sheet inspector. Rewritten in Rust
 - [ ] IO implementation
   - [ ] Safeguard Lib:
     - [ ] Replace AES128 w/ XChaCha20Poly1305
+    - [ ] Cache flushing
   - [ ] Misc:
       - [ ] Replace full overwrites w/ diff-based r/w operations
       - [ ] Caching
+      - [ ] Event Undo / Redo
 - [ ] TUI implementation:
   - [ ] Replace raw Stdout calls w/ Crossterm 
   - [ ] Replace hardcoded UI element props w/ dynamic & responsive solution
@@ -29,3 +31,4 @@ A terminal based grading sheet inspector. Rewritten in Rust
   - [ ] Replace god forbidden `getch()` calls
 - [ ] Data models:
   - [ ] Refactor data model to include non-int Orderables
+  - [ ] Event History
