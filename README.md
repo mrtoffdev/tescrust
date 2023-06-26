@@ -13,6 +13,7 @@ A terminal based grading sheet inspector. Rewritten in Rust
 - [ ] IO implementation
   - [ ] Safeguard Lib:
     - [ ] Replace AES128 w/ XChaCha20Poly1305
+    - [ ] Cache flushing
   - [ ] Misc:
       - [ ] Replace full overwrites w/ diff-based r/w operations
       - [ ] Caching
