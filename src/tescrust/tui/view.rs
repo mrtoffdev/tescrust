@@ -1,9 +1,22 @@
 #![allow(non_snake_case)]
 #![allow(unused)]
 
+/// ## Simplified TUI Render Process:
+/// ### The TUI is built in a three level process
+///     1. An abstract tree which contains the interface layout is
+///     bisected into individual abstract components
+///     2. Each individual component is rendered into a generic
+///     ComponentBlock, which is a struct that contains a vector
+///     that represents a frame of the characters that are sent to
+///     the TUI handler to be consolidated with other UI components.
+///     3. Consolidate all the char elements in all the ComponentBlocks
+///     into one frame that can be rendered into Stdout
+
+
 use crossterm::{execute, terminal};
 use std::io;
 use std::io::Stdout;
+use crate::tescrust::tui::view::DynSize::Usize;
 
 // ================== models ==================
 pub struct TuiCtx {
@@ -84,7 +97,20 @@ impl TuiCtx {
 enum DynSize {
         Parent,
         Block,
-        Usize(u8),
+        Usize(u8, u8),
+}
+
+
+/// # Core Elements
+/// The core building block of every TUI component present
+/// in a window
+
+struct ComponentBlock<'F> {
+        frame           : Frame<'F>,
+        child           : Vec<String>,
+
+        scroll          : ScrollHandler,
+        tui_size        : DynSize,
 }
 
 enum Frame<'p> {
@@ -92,11 +118,75 @@ enum Frame<'p> {
         New(u8),
 }
 
-/// The core building block of every TUI component present
-/// in a window
-struct ComponentBlock<'F> {
-        frame: Frame<'F>,
-        child: Vec<String>,
+
+/// # Nesting Components
+
+// ---------- Scroll ----------
+struct Scroll {
+        scr_buff        : i32,
+        scr_idx         : i32,
+}
+
+impl Scroll {
+        pub(crate) fn Build() -> ComponentBlock {
+                ComponentBlock {
+                        frame: Frame::New(1),
+                        child: vec![],
+                        scroll: (),
+                        tui_size: DynSize::Parent,
+                }
+        }
+
+        /// Returns the size of the scrollview buffer
+        fn get_size(&self, callback: Option<fn()>) -> i32 {
+                self.scr_buff
+        }
+
+        /// Sets the selected index within a scrollview
+        fn set_idx(&mut self, index: i32, callback: Option<fn()>) {
+                self.scr_idx = index;
+                match callback {
+                        Some(callback) => callback(),
+                        None => ()
+                }
+        }
+}
+
+/// # Non-Nesting Components
+
+// ---------- Table ----------
+enum TableData {
+        // common
+        str_int(Vec<(String, usize)>),
+        int_str(Vec<(usize, String)>),
+        str_str(Vec<(String, String)>),
+        int_int(Vec<(usize, usize)>),
+
+}
+
+struct Table {
+        // data
+        model   : TableData,
+
+        // tui
+        scroll  : Scroll,
+        rows    : i32,
+        cols    : i32,
+}
+
+impl Table {
+        pub(crate) fn Build() -> ComponentBlock {
+                ComponentBlock {
+                        frame: Frame::New(1),
+                        child: vec![],
+                        scroll: (),
+                        tui_size: DynSize::Parent,
+                }
+        }
+
+        fn get(&self) {
+
+        }
 }
 
 impl TCComponent for ComponentBlock<'_> {
