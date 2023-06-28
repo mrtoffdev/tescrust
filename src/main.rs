@@ -7,7 +7,7 @@ mod tescrust {
                 pub mod order;
                 pub mod search;
         }
-        pub(crate) mod io {
+        pub(crate) mod core {
                 pub mod crud;
                 pub mod data;
                 pub mod guard;
@@ -23,10 +23,11 @@ mod tescrust {
 }
 
 use std::path::Path;
-
 use crate::tescrust::{
-        io::crud::TCInput,
-        io::data::Crust, // prod version
+        core::{
+                crud::TCInput,
+                data::Crust
+        }, // prod version
         tui::{nav::*, view::TuiCtx},
 };
 
@@ -52,6 +53,6 @@ fn main() {
                 .expect("iostream_handler err...");
 
         // ---------- on exit ----------
-        
+
 
 }

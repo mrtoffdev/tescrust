@@ -6,8 +6,8 @@ use std::path::{Path, PathBuf};
 
 use crate::tescrust::io::data::{Crust, CrustIO};
 
-pub enum TCInput<'a> {
-        Path(&'a Path),
+pub enum TCInput<'A> {
+        Path(&'A Path),
         File(File),
 }
 

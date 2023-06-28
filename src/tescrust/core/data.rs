@@ -37,7 +37,7 @@ pub trait CrustIO {
         // ---------- actions ----------
         fn revert(&mut self, depth: usize);
 
-        // ---------- io ----------
+        // ---------- core ----------
         fn serialize(&mut self);
 }
 
@@ -67,7 +67,7 @@ impl CrustIO for Crust {
                 todo!();
         }
 
-        // ---------- io ----------
+        // ---------- core ----------
         fn serialize(&mut self) {
                 todo!();
         }
