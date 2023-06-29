@@ -4,8 +4,9 @@
 use crate::tescrust::{io::data::Crust, tui::view::TuiCtx};
 use std::io;
 use std::io::Write;
+use std::collections::HashMap;
 
-use crossterm::event::{read, KeyEventKind};
+use crossterm::event::{read, KeyEventKind, MouseEvent};
 
 use crossterm::{
         cursor,
@@ -29,7 +30,83 @@ fn read_char() -> io::Result<char> {
         }
 }
 
-enum KeyBinds {}
+/// # Keybindings & Mappings
+
+/// An exhaustive list of actions that can be mapped to keys
+enum KeyActions {
+        /// Navigation
+        Up,
+        Down,
+        Left,
+        Right,
+
+        // Actions
+        Quit,
+        Delete,
+        Edit,
+        Create,
+
+        // Debug
+        Ping
+}
+
+pub(crate) static KEY_MAP: HashMap<char, KeyActions> = HashMap::from([
+        /// Navigation
+        ('w', KeyActions::Up),
+        ('s', KeyActions::Down),
+        ('a', KeyActions::Left),
+        ('d', KeyActions::Right),
+
+        // Actions
+        ('q', KeyActions::Quit),
+        ('r', KeyActions::Delete),
+        ('e', KeyActions::Edit),
+        ('t', KeyActions::Create),
+
+        // Debug
+        ('1', KeyActions::Ping),
+]);
+
+pub(crate) fn handle_event(key: &char) {
+
+        match KEY_MAP.get(key).unwrap() {
+                // Navigation
+                KeyActions::Up => {
+
+                },
+                KeyActions::Down => {
+
+                },
+                KeyActions::Left => {
+
+                }
+                KeyActions::Right => {
+
+                }
+
+                // Operations
+                KeyActions::Quit => {
+
+                },
+                KeyActions::Delete => {
+
+                },
+                KeyActions::Edit => {
+
+                }
+                KeyActions::Create => {
+
+                }
+
+
+                // Debug Operations
+                KeyActions::Ping => {
+
+                }
+
+                _ => ()
+        }
+}
 
 // ---------- runtime entry pont ----------
 pub(crate) fn iostream_handler(crust: Crust, TuiCtx: TuiCtx) -> io::Result<()> {
