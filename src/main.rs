@@ -13,6 +13,12 @@ mod tescrust {
                 pub mod guard;
         }
         pub(crate) mod tui {
+                pub(crate) mod component {
+                        pub mod bar_graph;
+                        pub mod base;
+                        pub mod table;
+                        pub mod scroll;
+                }
                 pub mod nav;
                 pub mod view;
         }
