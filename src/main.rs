@@ -20,6 +20,9 @@ mod tescrust {
                         pub mod scroll;
                         pub mod layout;
                 }
+                pub(crate) mod workspaces {
+                        pub mod def_wspace;
+                }
                 pub mod nav;
                 pub mod view;
         }
