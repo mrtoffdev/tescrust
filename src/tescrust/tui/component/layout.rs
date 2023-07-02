@@ -6,16 +6,22 @@ use crate::tescrust::tui::{
         nav::KeyAction,
         component::base::ComponentBlock,
 };
+use crate::tescrust::tui::component::base::Planar;
 
+pub enum Layout {
+        HorizontalLayout(HorizontalLayout),
+        VerticalLayout(VerticalLayout),
+        ScrollLayout(ScrollLayout)
+}
 
 /// ---------- Horizontal Layout ----------
+///
 /// Layout where the flow of components move horizontally
 ///
 /// Default behavior is L -> R
-struct HorizontalLayout {
-        position        : (i32, i32),
-        size            : DynSize,
-        children        : Vec<dyn TCComponent>,
+pub struct HorizontalLayout {
+        pub planar      : Planar,
+        pub children    : Vec<dyn TCComponent>,
 }
 
 impl TCComponent for HorizontalLayout {
@@ -26,13 +32,13 @@ impl TCComponent for HorizontalLayout {
 
 
 /// ---------- Vertical Layout ----------
+///
 /// Layout where the flow of components move vertically
 ///
 /// Default behavior is T -> B <= Lim
-struct VerticalLayout {
-        position        : (i32, i32),
-        size            : DynSize,
-        children        : Vec<dyn TCComponent>,
+pub struct VerticalLayout {
+        pub planar      : Planar,
+        pub children    : Vec<dyn TCComponent>,
 }
 
 impl TCComponent for VerticalLayout {
@@ -43,16 +49,17 @@ impl TCComponent for VerticalLayout {
 
 
 /// ---------- Scroll Layout ----------
+///
 /// Layout where the flow of components move vertically
-/// However, unlike Vertical Layouts, Scroll Layout contents are
-/// allowed to overflow, creating a scrollable view to accommodate
-/// excess data.
+///
+/// However, unlike Vertical Layouts, Scroll Layout contents
+/// are allowed to overflow, creating a scrollable view to
+/// accommodate excess data.
 ///
 /// Default behavior is T -> B
 #[derive(Debug, PartialOrd, PartialEq, Eq, Clone, Copy, Hash)]
-struct ScrollLayout {
-        position        : (i32, i32),
-        size            : DynSize,
+pub struct ScrollLayout {
+        planar          : Planar,
         children        : Vec<dyn TCComponent>,
 
         buff_size       : i32,
