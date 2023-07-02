@@ -59,6 +59,10 @@ pub struct TuiCtx {
 impl TuiCtx {
         pub fn Default() -> Result<Self, io::Error> {
                 // ---------- blank ctx ----------
+                TuiCtx::new()
+        }
+
+        pub fn new() -> Result<Self, io::Error> {// ---------- blank ctx ----------
                 let mut term = io::stdout();
                 execute!(term, terminal::EnterAlternateScreen)?;
                 let (ui_x, ui_y) = terminal::size().unwrap();
@@ -86,11 +90,6 @@ impl TuiCtx {
                         c2: 0,
                         c3: 0,
                 })
-        }
-
-        pub fn new() -> Result<Self, io::Error> {
-                // ---------- blank ctx ----------
-                TuiCtx::Default()
         }
 }
 
