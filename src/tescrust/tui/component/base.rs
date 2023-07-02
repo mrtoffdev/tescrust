@@ -24,11 +24,12 @@ pub struct Planar {
 
 
 // ---------- TUI Models ----------
+// The core building block of every TUI component present in a window
 
-/// # Core Elements
-/// The core building block of every TUI component present
-/// in a window
-struct ComponentBlock<'F> {
+
+/// ## ComponentBlock
+/// The most primitive render-able TUI element
+pub struct ComponentBlock<'F> {
         frame           : Frame<'F>,
         child           : Vec<String>,
 
@@ -36,32 +37,15 @@ struct ComponentBlock<'F> {
         tui_size        : DynSize,
 }
 
-enum Frame<'p> {
+pub enum Frame<'p> {
         Merged(&'p Frame<'p>),
         New(u8),
 }
 
 // ---------- TCComponent ----------
 impl TCComponent for ComponentBlock<'_> {
-        fn indent(size: DynSize) {
-                let parent: ComponentBlock = ComponentBlock {
-                        frame: Frame::New(1),
-                        child: vec![],
-                };
-
-                let sub: ComponentBlock = ComponentBlock {
-                        frame: Frame::Merged(&parent.frame),
-                        child: vec![],
-                };
-
-                todo!()
-        }
-
-        fn whitespace(size: DynSize) {
-                todo!()
-        }
-
-        fn divider<S>(size: S) {
+        fn Build(&self) -> ComponentBlock<'static> {
                 todo!()
         }
 }
+
