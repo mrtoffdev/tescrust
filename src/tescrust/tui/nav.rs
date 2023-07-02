@@ -6,30 +6,19 @@ use std::io;
 use std::io::Write;
 use std::collections::HashMap;
 
-use crossterm::event::{read, KeyEventKind, MouseEvent};
-
 use crossterm::{
         cursor,
+        event::{read, KeyEventKind, MouseEvent},
         event::{self, Event, KeyCode, KeyEvent},
         execute, queue, style,
         terminal::{self, ClearType},
         Command,
 };
 
-fn read_char() -> io::Result<char> {
-        loop {
-                if let Ok(Event::Key(KeyEvent {
-                        code: KeyCode::Char(c),
-                        kind: KeyEventKind::Press,
-                        modifiers: _,
-                        state: _,
-                })) = event::read() {
-                        return Ok(c);
-                }
-        }
-}
 
-// # Keybindings & Mappings
+// ============================================
+// ========== Keybindings & Mappings ==========
+// ============================================
 
 /// An exhaustive list of actions that can be mapped to keys
 pub(crate) enum KeyAction {
@@ -69,7 +58,7 @@ pub(crate) static KEY_MAP: HashMap<char, KeyAction> = HashMap::from([
 
 /// A collection of key characters mapped to specific KeyActions (Vim Edition)
 pub(crate) static KEY_MAP_VIM: HashMap<char, KeyAction> = HashMap::from([
-        /// Navigation
+        // Navigation
         ('k', KeyAction::Up),
         ('j', KeyAction::Down),
         ('h', KeyAction::Left),
@@ -129,6 +118,21 @@ pub(crate) fn handle_event(key: &char) {
 
 // ---------- runtime entry pont ----------
 pub(crate) fn iostream_handler(crust: Crust, TuiCtx: TuiCtx) -> io::Result<()> {
+
+        /// Replacement helper function w/ similar features to _getch()
+        fn read_char() -> io::Result<char> {
+                loop {
+                        if let Ok(Event::Key(KeyEvent {
+                                code: KeyCode::Char(c),
+                                kind: KeyEventKind::Press,
+                                modifiers: _,
+                                state: _,
+                        })) = event::read() {
+                                return Ok(c);
+                        }
+                }
+        }
+
         let mut screen = io::stdout();
 
         execute!(screen, terminal::EnterAlternateScreen)?;
