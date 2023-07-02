@@ -93,9 +93,25 @@ impl TuiCtx {
         }
 }
 
-enum DynSize {
+pub(crate) enum DynSize {
+        /// Parent will return as a Usize(ParentX,ParentY) during
+        /// the parsing phase when building the ComponentBlock
+        /// representation. This serves as a directive to the parser
+        /// to save the parent component's size and clone it to this
+        /// Component.
         Parent,
+        /// Block will return as a Usize(ParentX, LocalY) during the
+        /// parsing phase when building ComponentBlock representation.
+        /// This serves as a directive to the parser to save only the
+        /// parent's X size and clone it to this component
         Block,
+        /// Usize serves as the most primitive variant of DynSize and is, by
+        /// definition, the only directly mutable / assignable size. All
+        /// DynSize variants are eventually converted to Usize when building
+        /// the ComponentBlock representation. However, explicit Usize assignments
+        /// before parsing will **always** retain its values after CBR building,
+        /// unlike the Parent or Block variants, which are regenerated and may or
+        /// may not retain its values after parsing.
         Usize(u8, u8),
 }
 
