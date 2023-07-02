@@ -67,6 +67,24 @@ pub(crate) static KEY_MAP: HashMap<char, KeyAction> = HashMap::from([
         ('1', KeyAction::Print),
 ]);
 
+/// A collection of key characters mapped to specific KeyActions (Vim Edition)
+pub(crate) static KEY_MAP_VIM: HashMap<char, KeyAction> = HashMap::from([
+        /// Navigation
+        ('k', KeyAction::Up),
+        ('j', KeyAction::Down),
+        ('h', KeyAction::Left),
+        ('l', KeyAction::Right),
+
+        // Actions
+        ('q', KeyAction::Quit),
+        ('w', KeyAction::Create),
+        ('e', KeyAction::Edit),
+        ('r', KeyAction::Delete),
+
+        // Debug
+        ('1', KeyAction::Print),
+]);
+
 /// Keymap-independent event handler. Used to trigger events according to KeyAction
 pub(crate) fn handle_event(key: &char) {
 
