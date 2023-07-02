@@ -112,23 +112,23 @@ trait TCComponent {
 }
 
 // ================== components ==================
-fn graph() -> ComponentBlock<'static> {
-        return ComponentBlock {
-                frame: Frame::New(1),
-                child: vec![],
-        };
-}
-
-fn table() -> ComponentBlock<'static> {
-        return ComponentBlock {
-                frame: Frame::New(1),
-                child: vec![],
-        };
-}
-
-fn helper() -> ComponentBlock<'static> {
-        return ComponentBlock {
-                frame: Frame::New(1),
-                child: vec![],
-        };
-}
+// fn graph() -> ComponentBlock<'static> {
+//         return ComponentBlock {
+//                 frame: Frame::New(1),
+//                 child: vec![],
+//         };
+// }
+//
+// fn table() -> ComponentBlock<'static> {
+//         return ComponentBlock {
+//                 frame: Frame::New(1),
+//                 child: vec![],
+//         };
+// }
+//
+// fn helper() -> ComponentBlock<'static> {
+//         return ComponentBlock {
+//                 frame: Frame::New(1),
+//                 child: vec![],
+//         };
+// }
