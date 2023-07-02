@@ -18,6 +18,7 @@ mod tescrust {
                         pub mod base;
                         pub mod table;
                         pub mod scroll;
+                        pub mod layout;
                 }
                 pub mod nav;
                 pub mod view;
