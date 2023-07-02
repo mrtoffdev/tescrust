@@ -1,7 +1,7 @@
 #![allow(non_snake_case)]
 #![allow(unused)]
 
-use crate::tescrust::{io::data::Crust, tui::view::TuiCtx};
+use crate::tescrust::{core::data::Crust, tui::view::TuiCtx};
 use std::io;
 use std::io::Write;
 use std::collections::HashMap;
@@ -23,18 +23,17 @@ fn read_char() -> io::Result<char> {
                         kind: KeyEventKind::Press,
                         modifiers: _,
                         state: _,
-                })) = event::read()
-                {
+                })) = event::read() {
                         return Ok(c);
                 }
         }
 }
 
-/// # Keybindings & Mappings
+// # Keybindings & Mappings
 
 /// An exhaustive list of actions that can be mapped to keys
-enum KeyActions {
-        /// Navigation
+pub(crate) enum KeyAction {
+        // Navigation
         Up,
         Down,
         Left,
@@ -47,60 +46,62 @@ enum KeyActions {
         Create,
 
         // Debug
-        Ping
+        Print
 }
 
-pub(crate) static KEY_MAP: HashMap<char, KeyActions> = HashMap::from([
+/// A collection of key characters mapped to specific KeyActions
+pub(crate) static KEY_MAP: HashMap<char, KeyAction> = HashMap::from([
         /// Navigation
-        ('w', KeyActions::Up),
-        ('s', KeyActions::Down),
-        ('a', KeyActions::Left),
-        ('d', KeyActions::Right),
+        ('w', KeyAction::Up),
+        ('s', KeyAction::Down),
+        ('a', KeyAction::Left),
+        ('d', KeyAction::Right),
 
         // Actions
-        ('q', KeyActions::Quit),
-        ('r', KeyActions::Delete),
-        ('e', KeyActions::Edit),
-        ('t', KeyActions::Create),
+        ('q', KeyAction::Quit),
+        ('r', KeyAction::Delete),
+        ('e', KeyAction::Edit),
+        ('t', KeyAction::Create),
 
         // Debug
-        ('1', KeyActions::Ping),
+        ('1', KeyAction::Print),
 ]);
 
+/// Keymap-independent event handler. Used to trigger events according to KeyAction
 pub(crate) fn handle_event(key: &char) {
 
         match KEY_MAP.get(key).unwrap() {
                 // Navigation
-                KeyActions::Up => {
+                KeyAction::Up => {
 
                 },
-                KeyActions::Down => {
+                KeyAction::Down => {
 
                 },
-                KeyActions::Left => {
+                KeyAction::Left => {
 
                 }
-                KeyActions::Right => {
+                KeyAction::Right => {
 
                 }
 
                 // Operations
-                KeyActions::Quit => {
+                KeyAction::Quit => {
 
                 },
-                KeyActions::Delete => {
+                KeyAction::Delete => {
 
                 },
-                KeyActions::Edit => {
+                KeyAction::Edit => {
 
                 }
-                KeyActions::Create => {
+                KeyAction::Create => {
 
                 }
 
 
                 // Debug Operations
-                KeyActions::Ping => {
+                KeyAction::Print => {
 
                 }
 
