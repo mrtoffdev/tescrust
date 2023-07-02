@@ -1,22 +1,28 @@
 #![allow(non_snake_case)]
 #![allow(unused)]
 
+use crossterm::{execute, terminal};
+use std::io;
+use std::io::Stdout;
+use uuid::Uuid;
+use crate::tescrust::tui::{
+        view::DynSize::Usize,
+        component::base::ComponentBlock,
+};
+
 /// ## Simplified TUI Render Process:
 /// ### The TUI is built in a three level process
 ///     1. An abstract tree which contains the interface layout is
 ///     bisected into individual abstract components
+///
 ///     2. Each individual component is rendered into a generic
 ///     ComponentBlock, which is a struct that contains a vector
 ///     that represents a frame of the characters that are sent to
 ///     the TUI handler to be consolidated with other UI components.
+///
 ///     3. Consolidate all the char elements in all the ComponentBlocks
 ///     into one frame that can be rendered into Stdout
 
-
-use crossterm::{execute, terminal};
-use std::io;
-use std::io::Stdout;
-use crate::tescrust::tui::view::DynSize::Usize;
 
 // ================== models ==================
 pub struct TuiCtx {
