@@ -71,3 +71,36 @@ pub(crate) fn DefaultWorkspace() -> Layout {
                 ]}
         )
 }
+
+pub fn CustomComponentExample() -> Layout {
+        // Custom Component that has two BarGraphs in one space
+        let GraphWithGraphCuzYnot = Layout::EHorizontalLayout(HorizontalLayout {
+                planar: Planar {
+                        position: (0, 0),
+                        size: DynSize::Parent,
+                },
+                children: vec![
+                        BarGraph {
+                                x: vec![],
+                                y: vec![],
+                        },
+                        BarGraph {
+                                x: vec![],
+                                y: vec![],
+                        }
+                ],
+        });
+
+        // Root Layout
+        Layout::VerticalLayout( VerticalLayout {
+                planar: Planar {
+                        position: (0, 0),
+                        size: DynSize::Parent,
+                },
+                children: vec![
+                        // Insert custom component
+                        GraphWithGraphCuzYnot
+                ],
+        })
+
+}
