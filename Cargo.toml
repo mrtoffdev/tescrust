@@ -10,9 +10,11 @@ uuid                = {"version" = "1.3.4", "features" = ["v4", "fast-rng"]}
 chacha20poly1305    = "0.10.1"
 pancurses           = "0.17.0"
 crossterm           = "0.26.1"
+phf                 = {"version" = "0.11.2", "features" = ["macros"]}
 
 [profile.release]
-lto           = true
-strip         = true
-codegen-units = 1
-panic         = "abort"
+lto             = true
+strip           = true
+codegen-units   = 1
+panic           = "abort"
+opt-level       = "z"
