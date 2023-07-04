@@ -4,7 +4,7 @@ use std::fs::File;
 use std::io::Read;
 use std::path::{Path, PathBuf};
 
-use crate::tescrust::io::data::{Crust, CrustIO};
+use crate::tescrust::core::data::{Crust, CrustIO};
 
 pub enum TCInput<'A> {
         Path(&'A Path),

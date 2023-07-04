@@ -10,7 +10,7 @@ use std::{
 use uuid::Uuid;
 
 // ---------- <pkg> -----------
-use crate::tescrust::io::{
+use crate::tescrust::core::{
         crud::TCInput,
         data::{Crust, TCAction, TCSheet},
 };
