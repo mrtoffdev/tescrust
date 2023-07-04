@@ -5,6 +5,7 @@ use crate::tescrust::{core::data::Crust, tui::view::TuiCtx};
 use std::io;
 use std::io::Write;
 use std::collections::HashMap;
+use phf::{phf_map};
 
 use crossterm::{
         cursor,
@@ -21,7 +22,8 @@ use crossterm::{
 // ============================================
 
 /// An exhaustive list of actions that can be mapped to keys
-pub(crate) enum KeyAction {
+#[derive(Clone)]
+pub enum KeyAction {
         // Navigation
         Up,
         Down,
@@ -39,45 +41,45 @@ pub(crate) enum KeyAction {
 }
 
 /// A collection of key characters mapped to specific KeyActions
-pub(crate) static KEY_MAP: HashMap<char, KeyAction> = HashMap::from([
-        /// Navigation
-        ('w', KeyAction::Up),
-        ('s', KeyAction::Down),
-        ('a', KeyAction::Left),
-        ('d', KeyAction::Right),
-
-        // Actions
-        ('q', KeyAction::Quit),
-        ('r', KeyAction::Delete),
-        ('e', KeyAction::Edit),
-        ('t', KeyAction::Create),
-
-        // Debug
-        ('1', KeyAction::Print),
-]);
-
-/// A collection of key characters mapped to specific KeyActions (Vim Edition)
-pub(crate) static KEY_MAP_VIM: HashMap<char, KeyAction> = HashMap::from([
+pub static KEY_MAP: phf::Map<&'static str, KeyAction> = phf_map!{
         // Navigation
-        ('k', KeyAction::Up),
-        ('j', KeyAction::Down),
-        ('h', KeyAction::Left),
-        ('l', KeyAction::Right),
+        "w" => KeyAction::Up,
+        "s" => KeyAction::Down,
+        "a" => KeyAction::Left,
+        "d" => KeyAction::Right,
 
-        // Actions
-        ('q', KeyAction::Quit),
-        ('w', KeyAction::Create),
-        ('e', KeyAction::Edit),
-        ('r', KeyAction::Delete),
+        // Operations
+        "q" => KeyAction::Quit,
+        "r" => KeyAction::Delete,
+        "e" => KeyAction::Edit,
+        "t" => KeyAction::Create,
 
         // Debug
-        ('1', KeyAction::Print),
-]);
+        "1" => KeyAction::Print,
+};
+
+// A collection of key characters mapped to specific KeyActions (Vim Edition)
+pub static KEY_MAP_VIM: phf::Map<&'static str, KeyAction> = phf_map!{
+        // Navigation
+        "k" => KeyAction::Up,
+        "j" => KeyAction::Down,
+        "h" => KeyAction::Left,
+        "l" => KeyAction::Right,
+
+        // Operations
+        "q" => KeyAction::Quit,
+        "r" => KeyAction::Delete,
+        "e" => KeyAction::Edit,
+        "w" => KeyAction::Create,
+
+        // Debug
+        "1" => KeyAction::Print,
+};
 
 /// Keymap-independent event handler. Used to trigger events according to KeyAction
-pub(crate) fn handle_event(key: &char) {
+pub(crate) fn handle_event(key: &str) {
 
-        match KEY_MAP.get(key).unwrap() {
+        match KEY_MAP.get(key).cloned().unwrap() {
                 // Navigation
                 KeyAction::Up => {
 
