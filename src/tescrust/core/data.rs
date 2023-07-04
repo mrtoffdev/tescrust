@@ -1,6 +1,6 @@
 #![allow(non_snake_case)]
 
-use crate::tescrust::io::crud::{new_tc, TCInput};
+use crate::tescrust::core::crud::{new_tc, TCInput};
 use std::path::{Path, PathBuf};
 use uuid::Uuid;
 
@@ -14,14 +14,14 @@ pub type TCSheet        = Vec<TCCell>;
 pub type TCHistory      = Vec<TCAction>;
 
 pub struct Crust {
-        pub(crate) author: String,
-        pub(crate) id: Uuid,
-        pub(crate) auth_key: String,
-        pub(crate) path: PathBuf,
-        pub(crate) history: TCHistory,
+        pub author      : String,
+        pub id          : Uuid,
+        pub auth_key    : String,
+        pub path        : PathBuf,
+        pub history     : TCHistory,
 
-        pub(crate) m_cache_raw: String,
-        pub(crate) m_cache_db: TCSheet,
+        pub m_cache_raw : String,
+        pub m_cache_db  : TCSheet,
 }
 
 pub trait CrustIO {
