@@ -1,7 +1,7 @@
 #![allow(non_snake_case)]
 #![allow(unused)]
 
-use crate::tescrust::{core::data::Crust, tui::view::TuiCtx};
+use crate::tescrust::{core::data::Crust, tui::view::TUIEnv};
 use std::io;
 use std::io::Write;
 use std::collections::HashMap;

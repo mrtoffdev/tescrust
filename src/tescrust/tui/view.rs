@@ -25,28 +25,33 @@ use crate::tescrust::tui::{
 
 
 // ================== models ==================
-pub struct TuiCtx {
-        window: Stdout,
+
+/// ## TUI Context
+/// This is the highest level representation of state within the TUI.
+/// Data held within this struct is used by different components within
+/// the layout.
+///
+/// Properties that are dynamically changed by the backend are prefixed
+/// with **`in_mut`**, while properties that can be mutated by interrupts
+/// are prefixed with **`out_mut`**. Properties that can be mutated by both
+/// the backend and the user are prefixed with **`in_out_mut`**.
+pub struct TUIEnv {
+        in_window: Stdout,
 
         // ---------- resolution ----------
-        ui_x: u16,      // Width
-        ui_y: u16,      // Height
-
-        // ---------- Scroll View ----------
-        buff_i: char,   // ScrollView Index
-        buff_s: i32,    // ScrollView Buffer Min
-        buff_e: i32,    // ScrollView Buffer Max
+        out_mut_planar          : Planar,
+        out_c_key               : u8,           // Nav Key (getch)
 
         // ---------- Indices ----------
-        n_focus: u8,    // Panel Index
-        n_key: u8,      // Nav Key (getch)
+        in_out_mut_pidx         : u8,           // Panel Index
 
         // ---------- Operations ----------
-        h_mode: u8,     // Getch Handler Mode
-        o_mode: u8,     // RW Operation Mode
-        sid: u8,        // Session Panel ID
+        in_out_mut_hmod         : u8,           // Getch Handler Mode
+        in_out_mut_opmod        : u8,           // RW Operation Mode
+        in_out_mut_sid          : u8,           // Session Panel ID
 
-        // ---------- Configuration ----------
+
+        // ========== Configuration ==========
 
         /// Interface
         wrap_lim: i32,
@@ -62,10 +67,12 @@ pub struct TuiCtx {
         c3: u32,         // Success
 }
 
-impl TuiCtx {
+impl TUIEnv {
+        /// ## Default
+        /// Implements the default state of the TUI context. Calls new()
         pub fn Default() -> Result<Self, io::Error> {
                 // ---------- blank ctx ----------
-                TuiCtx::new()
+                TUIEnv::new()
         }
 
         pub fn new() -> Result<Self, io::Error> {// ---------- blank ctx ----------
@@ -73,26 +80,22 @@ impl TuiCtx {
                 execute!(term, terminal::EnterAlternateScreen)?;
                 let (ui_x, ui_y) = terminal::size().unwrap();
                 execute!(term, terminal::LeaveAlternateScreen)?;
-                Ok(TuiCtx {
-                        window: term,
-                        ui_x,
-                        ui_y,
-                        buff_i: ' ',
-                        n_focus: 0,
-                        n_key: 0,
-                        h_mode: 0,
-                        o_mode: 0,
-                        sid: 0,
-                        buff_s: 0,
-                        buff_e: 0,
+                Ok(TUIEnv {
+                        in_window: std::io::stdout(),
+                        out_mut_planar: Planar {
+                                position: (0, 0),
+                                size: DynSize::Parent,
+                        },
+                        out_c_key: 0,
+                        in_out_mut_pidx: 0,
+                        in_out_mut_hmod: 0,
+                        in_out_mut_opmod: 0,
+                        in_out_mut_sid: 0,
                         wrap_lim: 0,
-
-                        c0: 0xFFFFFF,
-                        c5: 0x111111,
-
-                        c1: 0xAAAAAA,
-                        c4: 0xAADDFF,
-
+                        c0: 0,
+                        c5: 0,
+                        c1: 0,
+                        c4: 0,
                         c2: 0,
                         c3: 0,
                 })

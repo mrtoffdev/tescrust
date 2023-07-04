@@ -38,7 +38,7 @@ use crate::tescrust::{
                 crud::TCInput,
                 data::Crust
         }, // prod version
-        tui::{nav::*, view::TuiCtx},
+        tui::{nav::*, view::TUIEnv},
 };
 
 // ---------- <dev utils> -----------
