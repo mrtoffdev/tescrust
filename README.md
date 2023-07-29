@@ -1,15 +1,15 @@
-# Tescore
+## Tescrust
+A terminal-centric tabulator & data processing engine with a customizable responsive TUI & hotkey bindings, batteries included. Second to-be-released version of the Tescore series. Written in Rust and will support windows & linux-based systems
 
-A terminal based grading sheet inspector. Rewritten in Rust
+---
+### 📢 Warning: This is a work in progress, and is by no means a functional tool yet. Currently working on developing a TUI library using crossterm alongside this project, which is what's mostly occupying development time, and will most likely receive its own repository in the future 📢
 
-## Dependencies
+## ⚀ Dependencies
+* [uuid](https://crates.io/crates/uuid)
+* [chacha20poly1305](https://crates.io/crates/chacha20poly1305)
+* [crossterm](https://crates.io/crates/crossterm)
 
-* uuid              : https://crates.io/crates/uuid
-* chacha20poly1305  : https://crates.io/crates/chacha20poly1305
-* pancurses         : https://crates.io/crates/pancurses
-* crossterm         : https://crates.io/crates/crossterm
-
-## Roadmap
+## ⚀ Roadmap
 - [ ] IO implementation
   - [ ] Safeguard Lib:
     - [ ] Replace AES128 w/ XChaCha20Poly1305
