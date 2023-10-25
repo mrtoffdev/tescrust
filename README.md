@@ -4,12 +4,12 @@ A terminal-centric tabulator & data processing engine with a customizable respon
 ---
 ### 📢 Warning: This is a work in progress, and is by no means a functional tool yet. Currently working on developing a TUI library using crossterm alongside this project, which is what's mostly occupying development time, and will most likely receive its own repository in the future 📢
 
-## ⚀ Dependencies
+## Dependencies
 * [uuid](https://crates.io/crates/uuid)
 * [chacha20poly1305](https://crates.io/crates/chacha20poly1305)
 * [crossterm](https://crates.io/crates/crossterm)
 
-## ⚀ Roadmap
+## Roadmap
 - [ ] IO implementation
   - [ ] Safeguard Lib:
     - [ ] Replace AES128 w/ XChaCha20Poly1305
